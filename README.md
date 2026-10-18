@@ -7,54 +7,80 @@ Built with Node.js, Express, PostgreSQL (Sequelize) and JWT authentication.
 
 1. Install dependencies
 
-   npm install
+```bash
+npm install
+```
 
 2. Create a PostgreSQL database
 
-   CREATE DATABASE healthcare;
+```sql
+CREATE DATABASE healthcare;
+```
 
 3. Copy `.env.example` to `.env` and fill in your values
 
 4. Start the server
 
-   npm run dev
+```bash
+npm run dev
+```
 
 Tables are created automatically on first start.
 
-## Endpoints
+## API Endpoints
 
-Auth
-- POST /api/auth/register
-- POST /api/auth/login
+Send the token as `Authorization: Bearer <token>` on all routes except auth.
 
-Patients (token required)
-- POST /api/patients
-- GET /api/patients
-- GET /api/patients/:id
-- PUT /api/patients/:id
-- DELETE /api/patients/:id
+### Auth
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/auth/register | Register a user |
+| POST | /api/auth/login | Login and get a JWT |
 
-Doctors (token required)
-- POST /api/doctors
-- GET /api/doctors
-- GET /api/doctors/:id
-- PUT /api/doctors/:id
-- DELETE /api/doctors/:id
+### Patients
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/patients | Add a patient |
+| GET | /api/patients | Get your patients |
+| GET | /api/patients/:id | Get one patient |
+| PUT | /api/patients/:id | Update a patient |
+| DELETE | /api/patients/:id | Delete a patient |
 
-Mappings (token required)
-- POST /api/mappings
-- GET /api/mappings
-- GET /api/mappings/:patientId
-- DELETE /api/mappings/:id
+### Doctors
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/doctors | Add a doctor |
+| GET | /api/doctors | Get all doctors |
+| GET | /api/doctors/:id | Get one doctor |
+| PUT | /api/doctors/:id | Update a doctor |
+| DELETE | /api/doctors/:id | Delete a doctor |
 
-Send the token as `Authorization: Bearer <token>`.
+### Mappings
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/mappings | Assign a doctor to a patient |
+| GET | /api/mappings | Get all mappings |
+| GET | /api/mappings/:patientId | Get doctors of a patient |
+| DELETE | /api/mappings/:id | Remove a doctor from a patient |
 
-## Sample bodies
+## Sample Request Bodies
 
-Register: { "name": "John", "email": "john@example.com", "password": "secret123" }
+Register
+```json
+{ "name": "John", "email": "john@example.com", "password": "secret123" }
+```
 
-Patient: { "name": "Asha", "age": 30, "gender": "female", "phone": "9999999999", "address": "Meerut" }
+Patient
+```json
+{ "name": "Asha", "age": 30, "gender": "female", "phone": "9999999999", "address": "Meerut" }
+```
 
-Doctor: { "name": "Dr. Rao", "specialization": "Cardiology", "email": "rao@example.com", "phone": "8888888888" }
+Doctor
+```json
+{ "name": "Dr. Rao", "specialization": "Cardiology" }
+```
 
-Mapping: { "patientId": 1, "doctorId": 1 }
+Mapping
+```json
+{ "patientId": 1, "doctorId": 1 }
+```
